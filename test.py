@@ -1,70 +1,69 @@
-import util
+import random
+import time
+
+from game import Agent
+from game import Directions
+import search
 
 
-class SearchProblem:
-    """
-    This class outlines the structure of a search problem, but doesn't implement
-    any of the methods (in object-oriented terminology: an abstract class).
+class GoWestAgent(Agent):
+    def getAction(self, state):
+        if Directions.WEST in state.getLegalPacmanActions():
+            return Directions.WEST
+        else:
+            return Directions.STOP
 
-    You do not need to change anything in this class, ever.
-    """
 
-    def getStartState(self):
+class RandomAgent(Agent):
+    def getAction(self, state):
+        actions = state.getLegalPacmanActions()
+        random.shuffle(actions)
+        return actions[0]
+
+
+class SearchAgent(Agent):
+
+    def registerInitialState(self, state):
         """
-        Returns the start state for the search problem.
+        This is the first time that the agent sees the layout of the game
+        board. Here, we choose a path to the goal. In this phase, the agent
+        should compute the path to the goal and store it in a local variable.
+        All of the work is done in this method!
+
+        state: a GameState object (pacman.py)
         """
-        util.raiseNotDefined()
+        # TODO 11
 
-    def isGoalState(self, state):
-        """
-          state: Search state
-
-        Returns True if and only if the state is a valid goal state.
-        """
-        util.raiseNotDefined()
-
-    def getSuccessors(self, state):
-        """
-          state: Search state
-
-        For a given state, this should return a list of triples, (successor,
-        action, stepCost), where 'successor' is a successor to the current
-        state, 'action' is the action required to get there, and 'stepCost' is
-        the incremental cost of expanding to that successor.
-        """
-        util.raiseNotDefined()
-
-    def getCostOfActions(self, actions):
-        """
-         actions: A list of actions to take
-
-        This method returns the total cost of a particular sequence of actions.
-        The sequence must be composed of legal moves.
-        """
-        util.raiseNotDefined()
-
-
-
-
-class SingleFoodSearchProblem(SearchProblem):
-    def __init__(self, startingGameState):
         
-       # TODO 1
-
-
-    def getStartState(self):
         
-      # TODO 2
+
+    def getAction(self, state):
+        """
+        Returns the next action in the path chosen earlier (in
+        registerInitialState).  Return Directions.STOP if there is no further
+        action to take.
+
+        state: a GameState object (pacman.py)
+        """
+        # TODO 12
 
 
-    def isGoalState(self, state):
 
-      # TODO 3
+class BFSFoodSearchAgent(SearchAgent):
+    # TODO 13
+    pass
 
-    def getSuccessors(self, state):
 
-      # TODO 4
+class DFSFoodSearchAgent(SearchAgent):
+    # TODO 14
+    pass
 
-    def getCostOfActions(self, actions):
 
-     # TODO 5 
+class UCSFoodSearchAgent(SearchAgent):
+    # TODO 15
+    pass
+
+
+class AStarFoodSearchAgent(SearchAgent):
+    # TODO 16
+    pass

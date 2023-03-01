@@ -19,3 +19,18 @@ python pacman.py --layout testMaze --pacman GoWestAgent
 
 
 https://www.fer.unizg.hr/_download/repository/Lab_Assignment_1_-_Instructions.pdf
+
+
+git clone https://github.com/linhlbn/HCMUS-AI-Pacman-project.git
+
+
+python pacman.py --layout mediumClassic --pacman SearchAgent
+
+python pacman.py -l mediumMaze -p SearchAgent --agentArgs=dfs
+
+python pacman.py -h
+
+python pacman.py -l bigMaze -p SearchAgent --agentArgs=dfs -z .5 --frameTime 0
+
+
+python pacman.py -l bigMaze -z .5 -p SearchAgent
