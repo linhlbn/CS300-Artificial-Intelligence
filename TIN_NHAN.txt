@@ -16,6 +16,8 @@ getCostOfActions(actions): returns the total cost of a sequence of actions
 
 
 python pacman.py --layout testMaze --pacman GoWestAgent
+python pacman.py --layout testMaze --pacman RandomAgent
+
 
 
 https://www.fer.unizg.hr/_download/repository/Lab_Assignment_1_-_Instructions.pdf

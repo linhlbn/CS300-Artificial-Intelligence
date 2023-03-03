@@ -526,7 +526,7 @@ def readCommand(argv):
                       help='Writes game histories to a file (named by the time they were played)', default=False)
     parser.add_option('--replay', dest='gameToReplay',
                       help='A recorded game file (pickle) to replay', default=None)
-    parser.add_option('-a', '--agentArgs', dest='agentArgs',
+    parser.add_option('-a', '--fn', dest='agentArgs',
                       help='Comma separated values sent to agent. e.g. "opt1=val1,opt2,opt3=val3"')
     parser.add_option('-x', '--numTraining', dest='numTraining', type='int',
                       help=default('How many episodes are training (suppresses output)'), default=0)

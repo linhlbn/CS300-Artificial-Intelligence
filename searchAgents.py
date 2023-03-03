@@ -1,7 +1,9 @@
 import random
+import time
 
 from game import Agent
 from game import Directions
+import search
 
 
 class GoWestAgent(Agent):
@@ -20,6 +22,7 @@ class RandomAgent(Agent):
 
 
 class SearchAgent(Agent):
+
     def registerInitialState(self, state):
         """
         This is the first time that the agent sees the layout of the game
@@ -30,6 +33,15 @@ class SearchAgent(Agent):
         state: a GameState object (pacman.py)
         """
         # TODO 11
+        if self.searchFunction == None: raise (Exception, "No search function provided for SearchAgent")
+        starttime = time.time()
+        problem = self.searchType(state) # Makes a new search problem
+        self.actions  = self.searchFunction(problem) # Find a path
+        totalCost = problem.getCostOfActions(self.actions)
+        print('Path found with total cost of %d in %.1f seconds' % (totalCost, time.time() - starttime))
+        if '_expanded' in dir(problem): print('Search nodes expanded: %d' % problem._expanded)
+        
+        
 
     def getAction(self, state):
         """
@@ -40,10 +52,23 @@ class SearchAgent(Agent):
         state: a GameState object (pacman.py)
         """
         # TODO 12
+        
+        if 'actionIndex' not in dir(self): self.actionIndex = 0
+        i = self.actionIndex
+        self.actionIndex += 1
+        if i < len(self.actions):
+            return self.actions[i]
+        else:
+            return Directions.STOP
 
 
 class BFSFoodSearchAgent(SearchAgent):
     # TODO 13
+    
+    def __init__(self):
+        super().__init__
+        
+    
     pass
 
 
