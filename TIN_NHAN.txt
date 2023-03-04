@@ -36,3 +36,5 @@ python pacman.py -l bigMaze -p SearchAgent --agentArgs=dfs -z .5 --frameTime 0
 
 
 python pacman.py -l bigMaze -z .5 -p SearchAgent
+
+https://github.com/arshiyaansari/AI-Pacman-Project/blob/main/Search/search.py

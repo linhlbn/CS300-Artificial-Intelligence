@@ -2,8 +2,6 @@ import inspect
 import random, heapq
 import sys
 
-import signa as signa
-
 
 class FixedRandom:
     def __init__(self):

@@ -4,7 +4,7 @@ import time
 from game import Agent
 from game import Directions
 import search
-
+import problems
 
 class GoWestAgent(Agent):
     def getAction(self, state):
@@ -33,13 +33,13 @@ class SearchAgent(Agent):
         state: a GameState object (pacman.py)
         """
         # TODO 11
-        if self.searchFunction == None: raise (Exception, "No search function provided for SearchAgent")
+        if self.searchFunction == None: raise Exception("No search function provided for SearchAgent")
         starttime = time.time()
-        problem = self.searchType(state) # Makes a new search problem
-        self.actions  = self.searchFunction(problem) # Find a path
-        totalCost = problem.getCostOfActions(self.actions)
+        self.problem = self.searchType(state) # Makes a new search problem
+        self.actions  = self.searchFunction(self.problem) # Find a path
+        totalCost = self.problem.getCostOfActions(self.actions)
         print('Path found with total cost of %d in %.1f seconds' % (totalCost, time.time() - starttime))
-        if '_expanded' in dir(problem): print('Search nodes expanded: %d' % problem._expanded)
+        if '_expanded' in dir(self.problem): print('Search nodes expanded: %d' % self.problem._expanded)
         
         
 
@@ -64,11 +64,11 @@ class SearchAgent(Agent):
 
 class BFSFoodSearchAgent(SearchAgent):
     # TODO 13
-    def __init__(self, searchFunction=search.breadthFirstSearch, searchType=):
+    def __init__(self, searchFunction=search.breadthFirstSearch):
         self.searchFunction = searchFunction
-        self.searchType = searchType
             
     def registerInitialState(self, state):
+        self.searchType = problems.SingleFoodSearchProblem
         super().registerInitialState(state)
         self.path = search.breadthFirstSearch(self.problem)
         print(self.path)
@@ -76,14 +76,36 @@ class BFSFoodSearchAgent(SearchAgent):
 
 class DFSFoodSearchAgent(SearchAgent):
     # TODO 14
-    pass
+    def __init__(self, searchFunction=search.depthFirstSearch):
+        self.searchFunction = searchFunction
+            
+    def registerInitialState(self, state):
+        self.searchType = problems.SingleFoodSearchProblem
+        super().registerInitialState(state)
+        self.path = search.depthFirstSearch(self.problem)
+        print(self.path)
+
 
 
 class UCSFoodSearchAgent(SearchAgent):
     # TODO 15
-    pass
+    def __init__(self, searchFunction=search.uniformCostSearch):
+        self.searchFunction = searchFunction
+            
+    def registerInitialState(self, state):
+        self.searchType = problems.SingleFoodSearchProblem
+        super().registerInitialState(state)
+        self.path = search.uniformCostSearch(self.problem)
+        print(self.path)
 
 
 class AStarFoodSearchAgent(SearchAgent):
     # TODO 16
-    pass
+    def __init__(self, searchFunction=search.aStarSearch):
+        self.searchFunction = searchFunction
+            
+    def registerInitialState(self, state):
+        self.searchType = problems.SingleFoodSearchProblem
+        super().registerInitialState(state)
+        self.path = search.aStarSearch(self.problem)
+        print(self.path)

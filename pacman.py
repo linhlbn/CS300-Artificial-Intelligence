@@ -25,13 +25,8 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
-import os
-import random
-import sys
-
-import file as file
-
-import layout
+import util, layout
+import sys, types, time, random, os
 from game import Actions
 from game import Directions
 from game import Game
@@ -508,7 +503,7 @@ def readCommand(argv):
                       metavar='LAYOUT_FILE', default='mediumClassic')
     parser.add_option('-p', '--pacman', dest='pacman',
                       help=default('the agent TYPE in the pacmanAgents module to use'),
-                      metavar='TYPE', default='KeyboardAgent')
+                      metavar='TYPE', default='BFSFoodSearchAgent')
     parser.add_option('-t', '--textGraphics', action='store_true', dest='textGraphics',
                       help='Display output as text only', default=False)
     parser.add_option('-q', '--quietTextGraphics', action='store_true', dest='quietGraphics',
