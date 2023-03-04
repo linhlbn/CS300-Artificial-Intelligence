@@ -46,7 +46,7 @@ class SearchAgent(Agent):
     def getAction(self, state):
         """
         Returns the next action in the path chosen earlier (in
-        registerInitialState).  Return Directions.STOP if there is no further
+        registerInitialState).  Return Directions.SFTOP if there is no further
         action to take.
 
         state: a GameState object (pacman.py)
@@ -64,12 +64,14 @@ class SearchAgent(Agent):
 
 class BFSFoodSearchAgent(SearchAgent):
     # TODO 13
-    
-    def __init__(self):
-        super().__init__
-        
-    
-    pass
+    def __init__(self, searchFunction=search.breadthFirstSearch, searchType=):
+        self.searchFunction = searchFunction
+        self.searchType = searchType
+            
+    def registerInitialState(self, state):
+        super().registerInitialState(state)
+        self.path = search.breadthFirstSearch(self.problem)
+        print(self.path)
 
 
 class DFSFoodSearchAgent(SearchAgent):
