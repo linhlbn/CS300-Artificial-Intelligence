@@ -52,6 +52,9 @@ class SingleFoodSearchProblem(SearchProblem):
        self.start = (startingGameState.getPacmanPosition(), startingGameState.getFood())
        self.walls = startingGameState.getWalls()
        self.costFn = lambda x: 1
+       self.startingGameState = startingGameState
+       self._expanded = 0 # DO NOT CHANGE
+       self.heuristicInfo = {} # A dictionary for the heuristic to store information
 
 
     def getStartState(self):
@@ -67,27 +70,40 @@ class SingleFoodSearchProblem(SearchProblem):
       # Check if there is no more food left
       return state[1].count() == 0
 
+
     def getSuccessors(self, state):
 
       # TODO 4
       # Return a list of successors with their actions and costs
-      successors = []
-      for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
-          x,y = state[0]
-          dx, dy = Actions.directionToVector(action)
-          nextx, nexty = int(x + dx), int(y + dy)
-          if not self.walls[nextx][nexty]:
-              nextFood = state[1].copy()
-              nextFood[nextx][nexty] = False
-              successors.append( ( ((nextx,nexty), nextFood), action, 1) )
-      
-      return successors
+        successors = []
+        self._expanded += 1 # DO NOT CHANGE
+        for direction in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+            x,y = state[0]
+            dx, dy = Actions.directionToVector(direction)
+            nextx, nexty = int(x + dx), int(y + dy)
+            if not self.walls[nextx][nexty]:
+                nextFood = state[1].copy()
+                nextFood[nextx][nexty] = False
+                successors.append( ( ((nextx, nexty), nextFood), direction, 1) )
+        return successors
 
     def getCostOfActions(self, actions):
 
      # TODO 5 
      # Return the sum of costs of all actions
-     return sum([self.costFn(action) for action in actions])
+     #return sum([self.costFn(action) for action in actions])
+        """Returns the cost of a particular sequence of actions.  If those actions
+        include an illegal move, return 999999"""
+        x,y= self.getStartState()[0]
+        cost = 0
+        for action in actions:
+            # figure out the next state and see whether it's legal
+            dx, dy = Actions.directionToVector(action)
+            x, y = int(x + dx), int(y + dy)
+            if self.walls[x][y]:
+                return 999999
+            cost += 1
+        return cost     
 
 
 class MultiFoodSearchProblem(SearchProblem):
@@ -110,61 +126,3 @@ class MultiFoodSearchProblem(SearchProblem):
     def getCostOfActions(self, actions):
         # TODO 10
         pass
-
-
-
-
-
-
-
-
-
-
-
-class SingleFoodSearchProblem(SearchProblem):
-    def __init__(self, startingGameState):
-        
-       # TODO 1
-       # Initializing the problem with the start state and goal state
-       self.startingGameState = startingGameState
-       layout = startingGameState.getLayout()
-       self.walls = layout.walls.asList()
-       self.food = layout.food.asList()[0] # Assuming there is only one food in the maze
-       self.startingPosition = startingGameState.getPacmanPosition()
-        
-
-    def getStartState(self):
-        
-      # TODO 2
-      # Returning the start state
-      return self.startingPosition
-
-
-    def isGoalState(self, state):
-
-      # TODO 3
-      # Checking if a state is the goal state (the food position)
-      return state == self.food
-
-
-    def getSuccessors(self, state):
-
-      # TODO 4
-      # Generating successor states and actions from a given state
-      successors = []
-      for action in ["North", "South", "East", "West"]:
-          x,y = state
-          dx, dy = Actions.directionToVector(action)
-          nextx, nexty = int(x + dx), int(y + dy)
-          nextState = (nextx, nexty)
-          if not nextState in self.walls:
-              cost = 1 # Assuming uniform cost for each action
-              successors.append((nextState, action, cost))
-      return successors
-
-
-    def getCostOfActions(self, actions):
-
-     # TODO 5 
-     # Computing the total cost of a sequence of actions 
-     return len(actions) # Assuming uniform cost for each action
