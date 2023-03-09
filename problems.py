@@ -109,6 +109,7 @@ class SingleFoodSearchProblem(SearchProblem):
 class MultiFoodSearchProblem(SearchProblem):
     def __init__(self, startingGameState):
         # TODO 6
+        #
         pass
 
     def getStartState(self):
